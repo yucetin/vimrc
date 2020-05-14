@@ -7,7 +7,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-sensible'
@@ -16,7 +15,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 
-Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'dracula/vim', { 'as': 'dracula' }
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-dispatch'
@@ -34,6 +33,7 @@ Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'css', 'scss', 'json', 'graphql', 'markdown', 'yaml'] }
 Plug 'elmcast/elm-vim'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -52,7 +52,6 @@ let g:dracula_italic = 0
 
 " syntax on
 " colorscheme dracula
-
 
 set linebreak
 set number
@@ -155,6 +154,9 @@ nmap <C-p> :Files<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>/ :Ag<space>
 
+"use %% to get current dir in ex
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
 "Run mix format for elixir files on save
 let g:mix_format_on_save = 1
 let g:mix_format_silent_errors = 1
@@ -175,3 +177,4 @@ let g:airline#extensions#whitespace#enabled = 0
 "delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
+
