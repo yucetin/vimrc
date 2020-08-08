@@ -8,31 +8,34 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 
-" Plug 'dracula/vim', { 'as': 'dracula' }
 
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-endwise'
 Plug 'wakatime/vim-wakatime'
 Plug 'mhinz/vim-mix-format'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'css', 'scss', 'json', 'graphql', 'markdown', 'yaml'] }
+" Plug 'prettier/vim-prettier', {
+"   \ 'do': 'yarn install',
+"   \ 'for': ['javascript', 'css', 'scss', 'json', 'graphql', 'markdown', 'yaml'] }
 Plug 'elmcast/elm-vim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'nlknguyen/papercolor-theme'
+Plug 'luochen1990/rainbow'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+" Plug 'dense-analysis/ale'
+Plug 'vim-test/vim-test'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -40,15 +43,17 @@ Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
-let g:gruvbox_contrast_light='hard'
-set background=dark
-colorscheme gruvbox
+" let g:gruvbox_contrast_light='hard'
+" set t_Co=256   " This is may or may not needed.
 set termguicolors
-let g:gruvbox_italic=1
+set background=dark
+colorscheme PaperColor
+highlight clear SignColumn
+" let g:gruvbox_italic=1
 " autocmd vimenter * colorscheme gruvbox
 
 filetype plugin indent on
-let g:dracula_italic = 0
+" let g:dracula_italic = 0
 
 " syntax on
 " colorscheme dracula
@@ -60,7 +65,7 @@ set ignorecase
 set smartcase
 set showmatch
 set shortmess+=I
-set mouse=a
+set mouse=r
 set showcmd
 
 set noswapfile
@@ -80,10 +85,11 @@ inoremap <Tab> <C-n>
 
 "Use shift-tab to insert a literal tab character
 inoremap <S-Tab> <C-V><Tab>
-
+if exists("g:ctrl_user_command")
+    unlet g:ctrlp_user_command
+endif
 set ttimeoutlen=0
-
-set wildignore+=*/node_modules/*,*/deps/*,*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/node_modules/*,*/deps/*,*/tmp/*,*.so,*.swp,*.zip,*/elm-stuff/*,*.beam,_build/*.beam
 set omnifunc=syntaxcomplete#Complete
 
 augroup vimrc
@@ -131,8 +137,8 @@ set wildmenu
 set wildmode=list:longest,full
 
 "Make background transparent
-hi Normal ctermbg=none
-hi NonText ctermbg=none
+" hi Normal ctermbg=none
+" hi NonText ctermbg=none
 
 "Highlight current line number
 hi clear CursorLine  
@@ -150,12 +156,9 @@ endif
 nmap gb <C-^>
 
 " fzf
-nmap <C-p> :Files<cr>
+" nmap <C-p> :Files<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>/ :Ag<space>
-
-"use %% to get current dir in ex
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 "Run mix format for elixir files on save
 let g:mix_format_on_save = 1
@@ -167,7 +170,7 @@ let g:elm_format_autosave = 1
 
 "vim airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme= 'gruvbox'
+let g:airline_theme= 'papercolor'
 if !exists('g:airline_symbols')
 let g:airline_symbols = {}
 endif
@@ -177,4 +180,17 @@ let g:airline#extensions#whitespace#enabled = 0
 "delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
-
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
+" let g:gruvbox_contrast_light='hard'
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" let g:ale_fixers = { 'elixir': ['mix_format'] }
+nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>
+let test#strategy = "dispatch"
+nmap <leader>tn :TestNearest<cr>
+nmap <leader>tf  :TestFile<cr>
+nmap <leader>ts  :TestSuite<cr>
+nmap <leader>tl  :TestLast<cr>
+nmap <leader>tv  :TestVisit<cr>
