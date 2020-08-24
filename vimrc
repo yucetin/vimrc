@@ -13,7 +13,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 
-
 " Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -25,16 +24,12 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-endwise'
 Plug 'wakatime/vim-wakatime'
 Plug 'mhinz/vim-mix-format'
-" Plug 'prettier/vim-prettier', {
-"   \ 'do': 'yarn install',
-"   \ 'for': ['javascript', 'css', 'scss', 'json', 'graphql', 'markdown', 'yaml'] }
 Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'nlknguyen/papercolor-theme'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
-" Plug 'dense-analysis/ale'
 Plug 'vim-test/vim-test'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -43,20 +38,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
-" let g:gruvbox_contrast_light='hard'
-" set t_Co=256   " This is may or may not needed.
 set termguicolors
 set background=dark
 colorscheme PaperColor
 highlight clear SignColumn
-" let g:gruvbox_italic=1
-" autocmd vimenter * colorscheme gruvbox
 
 filetype plugin indent on
-" let g:dracula_italic = 0
-
-" syntax on
-" colorscheme dracula
 
 set linebreak
 set number
@@ -136,10 +123,6 @@ endif
 set wildmenu
 set wildmode=list:longest,full
 
-"Make background transparent
-" hi Normal ctermbg=none
-" hi NonText ctermbg=none
-
 "Highlight current line number
 hi clear CursorLine  
 hi CursorLineNR cterm=bold 
@@ -181,12 +164,10 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-" let g:gruvbox_contrast_light='hard'
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 " nnoremap <silent> K :call <SID>show_documentation()<CR>
-" let g:ale_fixers = { 'elixir': ['mix_format'] }
 nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>
 let test#strategy = "dispatch"
 nmap <leader>tn :TestNearest<cr>
