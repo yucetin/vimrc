@@ -38,6 +38,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
+set rtp+=~/.vim/bundle/fzf
 set termguicolors
 set background=dark
 colorscheme PaperColor
@@ -148,7 +149,7 @@ let g:mix_format_on_save = 1
 let g:mix_format_silent_errors = 1
 
 let g:elm_setup_keybindings = 0
-let g:polyglot_disabled = ['elm']
+" let g:polyglot_disabled = ['elm']
 let g:elm_format_autosave = 1
 
 "vim airline
