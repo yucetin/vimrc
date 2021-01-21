@@ -24,13 +24,13 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-endwise'
 Plug 'wakatime/vim-wakatime'
 Plug 'mhinz/vim-mix-format'
-Plug 'elmcast/elm-vim'
+" Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'nlknguyen/papercolor-theme'
 Plug 'luochen1990/rainbow'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
-Plug 'vim-test/vim-test'
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
+" Plug 'vim-test/vim-test'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -38,6 +38,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
+
+
 set rtp+=~/.vim/bundle/fzf
 set termguicolors
 set background=dark
@@ -153,26 +155,28 @@ let g:elm_setup_keybindings = 0
 let g:elm_format_autosave = 1
 
 "vim airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme= 'papercolor'
-if !exists('g:airline_symbols')
-let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-let g:airline#extensions#whitespace#enabled = 0
+" let g:airline_powerline_fonts = 1
+" let g:airline_theme= 'papercolor'
+" if !exists('g:airline_symbols')
+" let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.space = "\ua0"
+" let g:airline#extensions#whitespace#enabled = 0
 
 "delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gr <Plug>(coc-references)
 " nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>
+" nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>
 let test#strategy = "dispatch"
 nmap <leader>tn :TestNearest<cr>
 nmap <leader>tf  :TestFile<cr>
 nmap <leader>ts  :TestSuite<cr>
 nmap <leader>tl  :TestLast<cr>
 nmap <leader>tv  :TestVisit<cr>
+" Typscript stuff
+" autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
