@@ -11,41 +11,47 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'preservim/nerdtree'
-
 " Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-ragtag'
+" Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-endwise'
-Plug 'wakatime/vim-wakatime'
-Plug 'mhinz/vim-mix-format'
+" Plug 'tpope/vim-endwise'
+Plug 'wakatime/vim-wakatime' " Plug 'junegunn/rainbow_parentheses.vim'
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+" Plug 'mhinz/vim-mix-format'
 " Plug 'elmcast/elm-vim'
-Plug 'elixir-editors/vim-elixir'
-Plug 'nlknguyen/papercolor-theme'
-Plug 'luochen1990/rainbow'
+" Plug 'elixir-editors/vim-elixir' " Plug 'luochen1990/rainbow'
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Plug 'amiralies/coc-elixir', {'do': 'yarn install && yarn prepack'}
 " Plug 'vim-test/vim-test'
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
 Plug 'sheerun/vim-polyglot'
+Plug 'rakr/vim-one'
 
 call plug#end()
 
-
-set rtp+=~/.vim/bundle/fzf
+syntax on
+colorscheme one 
+set background=dark 
 set termguicolors
-set background=dark
-colorscheme PaperColor
-highlight clear SignColumn
+let g:airline_theme='one'
+" call one#highlight('vimHighlight', 'cccccc', '', 'none')
 
+" Use new regular expression engine
+set re=0
+set rtp+=~/.vim/bundle/fzf
+j
+" highlight clear SignColumn
+highlight Visual cterm=bold ctermbg=Blue ctermfg=NONE
+highlight Pmenu ctermbg=Blue guibg=Blue
+highlight PmenuSel ctermbg=Red guibg=Red
 filetype plugin indent on
 
 set linebreak
@@ -70,10 +76,10 @@ set shiftwidth=2
 set softtabstop=2
 set cindent
 
-"Tab for auto-complete
+""Tab for auto-complete
 inoremap <Tab> <C-n>
 
-"Use shift-tab to insert a literal tab character
+""Use shift-tab to insert a literal tab character
 inoremap <S-Tab> <C-V><Tab>
 if exists("g:ctrl_user_command")
     unlet g:ctrlp_user_command
@@ -86,6 +92,7 @@ augroup vimrc
     autocmd!
 augroup END
 
+let &titlestring = expand("%:p")
 set title
 autocmd vimrc BufEnter * let &titlestring = 'vim ' . expand("%:p")
 
@@ -115,7 +122,7 @@ nmap <leader>sv :so ~/.vimrc<cr>
 "Quit vim with Q as well as q
 command! Q q
 command! W w
-
+command! Bd bp|bd #
 "open a file where I left off last time
 if has('autocmd')
     autocmd vimrc BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') && &filetype !=# 'gitcommit'
@@ -138,45 +145,48 @@ if has('persistent_undo')
     set undofile
 endif
 
-"Switch to last buffer
+""Switch to last buffer
 nmap gb <C-^>
 
 " fzf
-" nmap <C-p> :Files<cr>
+nmap <C-p> :Files<cr>
 nmap <leader>b :Buffers<cr>
-nmap <leader>/ :Ag<space>
+nmap <leader><CR> :Ag<space>
 
 "Run mix format for elixir files on save
-let g:mix_format_on_save = 1
-let g:mix_format_silent_errors = 1
+" let g:mix_format_on_save = 1
+" let g:mix_format_silent_errors = 1
 
-let g:elm_setup_keybindings = 0
+" let g:elm_setup_keybindings = 0
 " let g:polyglot_disabled = ['elm']
-let g:elm_format_autosave = 1
+" let g:elm_format_autosave = 1
 
 "vim airline
-" let g:airline_powerline_fonts = 1
-" let g:airline_theme= 'papercolor'
-" if !exists('g:airline_symbols')
-" let g:airline_symbols = {}
-" endif
-" let g:airline_symbols.space = "\ua0"
-" let g:airline#extensions#whitespace#enabled = 0
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.space = "\ua0"
+let g:airline#extensions#whitespace#enabled = 0
 
 "delimitMate
 let g:delimitMate_expand_cr = 2
 let g:delimitMate_expand_space = 1
 nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+" let g:rainbow#max_level = 16
+" let g:rainbow#pairs = [['(', ')'], ['[', ']']]
+" let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 " nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gr <Plug>(coc-references)
 " nnoremap <silent> K :call <SID>show_documentation()<CR>
 " nnoremap <silent> <leader>co  :<C-u>CocList outline<CR>
-let test#strategy = "dispatch"
-nmap <leader>tn :TestNearest<cr>
-nmap <leader>tf  :TestFile<cr>
-nmap <leader>ts  :TestSuite<cr>
-nmap <leader>tl  :TestLast<cr>
-nmap <leader>tv  :TestVisit<cr>
+" let test#strategy = "dispatch"
+" nmap <leader>tn :TestNearest<cr>
+" nmap <leader>tf  :TestFile<cr>
+" nmap <leader>ts  :TestSuite<cr>
+" nmap <leader>tl  :TestLast<cr>
+" nmap <leader>tv  :TestVisit<cr>
 " Typscript stuff
 " autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
